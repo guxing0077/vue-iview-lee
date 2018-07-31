@@ -1,0 +1,33 @@
+/**
+ * 列表页
+ */
+.h-12{
+	margin-top:12px;
+}
+html{
+	padding:12px;
+}
+/**
+ * 添加页
+ */
+#compound-add{
+	margin-left: 100px;
+	margin-top: 50px;
+}
+div.add-label span{
+	font-size: 18pt;
+}
+div.add-label{
+	margin-bottom: 12px;
+}
+input,button{
+	margin-top: 8px;
+}
+div.ivu-select-selection{
+	margin-top: 8px;
+}
+.c-red{
+	color: red;
+	font-size: 20px;
+	margin: 0 auto;
+}

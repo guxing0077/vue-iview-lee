@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>添加化合物</title>
+	<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/iview.css">
+    <link rel="stylesheet" type="text/css" href="css/compound.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts/ionicons.ttf">
+    <script type="text/javascript" src="js/vue.min.js"></script>
+    <script type="text/javascript" src="js/iview.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+</head>
+<body>
+<div id="compound-add">
+<div class="add-label"><span>添加化合物</span></div>
+<form id="compound-add-form">
+	<table>
+		<tr>
+			<td><span class="c-red">*</span>中文名:</td>
+			<td><i-input v-model="compound.cnName" name="cnName" placeholder="中文名"></i-input></td>
+		</tr>
+		<tr>
+			<td>英文名</td>
+			<td><i-input v-model="compound.enName"placeholder="英文名"></i-input></td>
+		</tr>
+		<tr>
+			<td><span class="c-red">*</span>cas号:</td>
+			<td><i-input v-model="compound.cas" name="cas" placeholder="cas号"></i-input></td>
+		</tr>
+		<tr>
+			<td>化合物类型:</td>
+			<td>
+	            <i-select v-model="compound.type" @on-change="selectType" style="width:200px" clearable>
+			        <i-option v-for="item in types" :key="item.label" :value="item.value">{{ item.label }}</i-option>
+			    </i-select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<i-button @click="toSubmit" type="success">提交</i-button>
+				<i-button @click="toBack" type="ghost" style="margin-left: 8px">返回</i-button>
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+<script>
+    new Vue({
+        el: '#compound-add',
+        data: {
+            compound:{
+            	cnName: '',
+	            enName: '',
+	            type: 0,
+	            cas: ''
+            },
+           	types: [],
+           	ruleCustom: {
+                cnName: [
+                    { required: true, message: '化合物中文名不能为空', trigger: 'blur' }
+                ],
+                cas: [
+                    { required: true, message: '化合物cas号不能为空', trigger: 'blur' }
+                ]
+            }
+        },
+        created: function() {
+            this.types = [{
+                value: 0,
+                label: '通用化合物'
+            },{
+                value: 1,
+                label: '混合物'
+            },{
+                value: 2,
+                label: '植物提取物',
+            }];
+        },
+        methods: {
+            selectType: function(val){
+                if(val!==-1){
+                    this.compound.type = val;
+                } 
+            },
+            toSubmit: function(){
+            	//校验数据
+			if(!$("#compound-add-form").valid() ){return;}
+            	//ajax提交保存
+            	console.log("参数为:%o", this.compound);
+            },
+            toBack: function(){
+            	location.href = "index.html";
+            }
+        }
+    });
+    $(function(){
+    	//表单校验
+		$("#compound-add-form").validate({
+            rules:{
+                cnName:{
+                    required:true
+                },
+                cas:{
+                	required: true
+                }
+            },
+            messages:{
+                cnName:{
+                    required:"化合物中文名称不能为空"
+                },
+                cas: {
+					required:"cas号不能为空"
+                }
+            }
+		});
+    });
+ </script>
+</body>
+</html>
